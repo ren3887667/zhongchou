@@ -13,4 +13,6 @@ import com.by.entity.TMenu;
  */
 public interface TMenuDao extends BaseMapper<TMenu> {
 
+    /*yc*/
+
 }
