@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+
+    <!-- 扫描service包下的注解 -->
+    <context:component-scan base-package="com.by">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- 引入jdbc.properties 文件 -->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <!-- 
+		整合数据源 
+		c3p0  dbcp druid
+	-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="driverClassName" value="${jdbc.driver}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean>
+
+    <!-- 使用 DriverManagerDataSource 不是连接池 ，每次请求都会开启和关闭事务 -->
+    <!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driver}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean> -->
+
+    <!-- 使用c3p0 -->
+    <!-- <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${jdbc.driver}"></property>
+		<property name="jdbcUrl" value="${jdbc.url}"></property>
+		<property name="user" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean> -->
+
+<!--    &lt;!&ndash; 使用dbcp &ndash;&gt;
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driver}"></property>
+        <property name="url" value="${jdbc.url}"></property>
+        <property name="username" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+        &lt;!&ndash; maxActive：最大连接数 &ndash;&gt;
+        <property name="maxActive" value="20"></property>
+        &lt;!&ndash; initialSize：初始化连接数 &ndash;&gt;
+        <property name="initialSize" value="5"></property>
+        &lt;!&ndash; maxIdle:最大等待连接数 &ndash;&gt;
+        <property name="maxIdle" value="20"></property>
+    </bean>-->
+
+    <!-- 整合SqlSessionFactoryBean   -->
+    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+        <!-- mapper.xml文件的路径 -->
+        <property name="mapperLocations" value="classpath:com/by/mapper/*.xml"></property>
+    </bean>
+    <!--
+
+       !!!!!使用mybatis-plus 配置sqlsessionFactory用到的类是MybatisSqlSessionFactoryBean， 不是mybatis通用的SqlSessionFactoryBean
+
+   -->
+    <bean id="sqlSessionFactory" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 配置mybatis全局配置文件 -->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!-- 扫描entity包，使用别名 -->
+        <property name="typeAliasesPackage" value="com.by.entity"/>
+        <!-- 扫描sql配置文件 -->
+        <property name="mapperLocations" value="classpath:com/by/mapper/*.xml"/>
+    </bean>
+
+
+    <!-- 扫描mapper接口文件 -->
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean"></property>
+        <property name="basePackage" value="com.by.mapper"></property>
+    </bean>
+
+
+    <!-- 事务管理  -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <!-- 开启注解 -->
+    <!--
+        此处设置 proxy-target-class 为 true
+        如果不设置，启动会报错：BeanNotOfRequiredTypeException: Bean named 'ifaceImpl' is expected to be of type 'com.xh.spring.aop.IfaceImpl' but was actually of type 'com.sun.proxy.$Proxy10'
+        因为项目使用mybatis-plus，service和mapper都继承了接口
+        spring官方：如果要代理的目标对象实现至少一个接口，则将使用JDK动态代理。 目标类型实现的所有接口都将被代理。 如果目标对象未实现任何接口，则将创建CGLIB代理。
+        spring选择了使用jdk动态代理，所以报出上面的异常
+        这是设置为true，强制使用CGLib生成代理类
+    -->
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+
+
+    <!--<tx:advice id="txManager" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="save*" propagation="REQUIRED"/>
+			<tx:method name="delete*" propagation="REQUIRED"/>
+			<tx:method name="update*" propagation="REQUIRED"/>
+			<tx:method name="**" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config>
+		<aop:advisor advice-ref="txManager" pointcut="execution(* com.by.tx.service..*.*(..))"/>
+	</aop:config>
+-->
+
+
+</beans>

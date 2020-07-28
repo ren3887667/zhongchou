@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/bycrowdfunding01-admin-parent/bycrowdfunding01-admin-parent.iml" filepath="$PROJECT_DIR$/bycrowdfunding01-admin-parent/bycrowdfunding01-admin-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bycrowdfunding02-admin-webui/bycrowdfunding02-admin-webui.iml" filepath="$PROJECT_DIR$/bycrowdfunding02-admin-webui/bycrowdfunding02-admin-webui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bycrowdfunding03-admin-component/bycrowdfunding03-admin-component.iml" filepath="$PROJECT_DIR$/bycrowdfunding03-admin-component/bycrowdfunding03-admin-component.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bycrowdfunding04-admin-entity/bycrowdfunding04-admin-entity.iml" filepath="$PROJECT_DIR$/bycrowdfunding04-admin-entity/bycrowdfunding04-admin-entity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bycrowdfunding05-common-util/bycrowdfunding05-common-util.iml" filepath="$PROJECT_DIR$/bycrowdfunding05-common-util/bycrowdfunding05-common-util.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bycrowdfunding06-common-reverse/bycrowdfunding06-common-reverse.iml" filepath="$PROJECT_DIR$/bycrowdfunding06-common-reverse/bycrowdfunding06-common-reverse.iml" />
+    </modules>
+  </component>
+</project>
