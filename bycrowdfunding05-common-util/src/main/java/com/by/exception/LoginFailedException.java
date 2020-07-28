@@ -1,4 +1,4 @@
-package com.atguigu.crowd.exception;
+package com.by.exception;
 
 /**
  * 登录失败后抛出的异常

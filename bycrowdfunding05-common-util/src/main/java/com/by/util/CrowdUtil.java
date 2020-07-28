@@ -1,6 +1,6 @@
-package com.atguigu.crowd.util;
+package com.by.util;
 
-import com.atguigu.crowd.constant.CrowdConstant;
+import com.by.constant.CrowdConstant;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;

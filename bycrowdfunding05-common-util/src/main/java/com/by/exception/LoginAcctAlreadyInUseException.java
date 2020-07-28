@@ -1,4 +1,4 @@
-package com.atguigu.crowd.exception;
+package com.by.exception;
 
 /**
  * 保存或更新Admin时如果检测到登录账号重复抛出这个异常

@@ -1,4 +1,4 @@
-package com.atguigu.crowd.constant;
+package com.by.constant;
 
 public class CrowdConstant {
 	

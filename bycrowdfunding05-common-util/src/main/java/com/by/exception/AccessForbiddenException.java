@@ -1,4 +1,4 @@
-package com.atguigu.crowd.exception;
+package com.by.exception;
 
 /**
  * 表示用户没有登录就访问受保护资源时抛出的异常

@@ -1,9 +1,17 @@
 package com.by.controller;
 
+import com.by.entity.TMenu;
 import com.by.service.TMenuService;
+import com.by.util.ResultEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -20,10 +28,6 @@ public class TMenuController {
     @Autowired
     private TMenuService menuService;
 
-    @RequestMapping("/test")
-    public String test() {
-        return "hello..page";
-    }
 
 /*    @ResponseBody
     @RequestMapping("/menu/remove.json")
@@ -49,14 +53,13 @@ public class TMenuController {
         menuService.save(menu);
         return ResultEntity.successWithoutData();
     }
-
+**/
     @ResponseBody
     @RequestMapping("/menu/get/whole/tree.json")
     public ResultEntity<TMenu> getWholeTreeNew() {
 
         // 1.查询全部的Menu对象
         List<TMenu> menuList = menuService.list();
-        menuService.
         // 2.声明一个变量用来存储找到的根节点
                 TMenu root = null;
 
@@ -93,13 +96,13 @@ public class TMenuController {
         }
 
         // 11.经过上面的运算，根节点包含了整个树形结构，返回根节点就是返回整个树
-        return ResultEntity.successWithData(root);
+        return com.by.util.ResultEntity.successWithData(root);
     }
 
-    public ResultEntity<TMenu> getWholeTreeOld() {
+    public com.by.util.ResultEntity<TMenu> getWholeTreeOld() {
 
         // 1.查询全部的Menu对象
-        List<TMenu> menuList = menuService.getAll();
+        List<TMenu> menuList = menuService.list();
 
         // 2.声明一个变量用来存储找到的根节点
         TMenu root = null;
@@ -140,7 +143,7 @@ public class TMenuController {
         }
 
         // 13.将组装的树形结构（也就是根节点对象）返回给浏览器
-        return ResultEntity.successWithData(root);
-    }*/
+        return com.by.util.ResultEntity.successWithData(root);
+    }
 }
 
