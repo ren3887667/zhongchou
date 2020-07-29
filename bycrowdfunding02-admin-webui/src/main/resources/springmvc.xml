@@ -43,6 +43,8 @@
         <property name="maxInMemorySize" value="40960"/>
     </bean>
 
+    <!--直接可以进行单独的 条页面请求 不需要再controller层写方法-->
+    <mvc:view-controller path="/menu" view-name="menu-page"/>
 
 
 </beans>
