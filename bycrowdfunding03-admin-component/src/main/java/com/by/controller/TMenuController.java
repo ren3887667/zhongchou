@@ -96,7 +96,7 @@ public class TMenuController {
         }
 
         // 11.经过上面的运算，根节点包含了整个树形结构，返回根节点就是返回整个树
-        return com.by.util.ResultEntity.successWithData(root);
+        return ResultEntity.successWithData(root);
     }
 
     public com.by.util.ResultEntity<TMenu> getWholeTreeOld() {
