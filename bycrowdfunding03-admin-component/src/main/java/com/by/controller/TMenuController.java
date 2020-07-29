@@ -1,10 +1,13 @@
 package com.by.controller;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.segments.MergeSegments;
 import com.by.entity.TMenu;
 import com.by.service.TMenuService;
 import com.by.util.ResultEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +21,7 @@ import java.util.Objects;
  *  前端控制器
  * </p>
  *
- * @author rj
+ * @author yc
  * @since 2020-07-28
  */
 @RestController
@@ -29,7 +32,7 @@ public class TMenuController {
     private TMenuService menuService;
 
 
-/*    @ResponseBody
+    @ResponseBody
     @RequestMapping("/menu/remove.json")
     public ResultEntity<String> removeMenu(@RequestParam("id") Integer id) {
         menuService.removeById(id);
@@ -40,7 +43,7 @@ public class TMenuController {
     @RequestMapping("/menu/update.json")
     public ResultEntity<String> updateMenu(TMenu menu) {
 
-        menuService.updateMenu(menu);
+        menuService.updateById(menu);
 
         return ResultEntity.successWithoutData();
     }
@@ -53,7 +56,7 @@ public class TMenuController {
         menuService.save(menu);
         return ResultEntity.successWithoutData();
     }
-**/
+
     @ResponseBody
     @RequestMapping("/menu/get/whole/tree.json")
     public ResultEntity<TMenu> getWholeTreeNew() {
@@ -131,7 +134,6 @@ public class TMenuController {
 
                 // 10.将子节点的pid和疑似父节点的id进行比较
                 if(Objects.equals(pid, id)) {
-
                     // 11.将子节点存入父节点的children集合
                     maybeFather.getChildren().add(menu);
 
@@ -141,9 +143,8 @@ public class TMenuController {
 
             }
         }
-
         // 13.将组装的树形结构（也就是根节点对象）返回给浏览器
-        return com.by.util.ResultEntity.successWithData(root);
+        return ResultEntity.successWithData(root);
     }
 }
 

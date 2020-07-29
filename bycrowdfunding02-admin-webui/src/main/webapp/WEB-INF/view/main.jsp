@@ -13,21 +13,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <link rel="stylesheet" href="http://127.0.0.1:8011/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://127.0.0.1:8011/css/font-awesome.min.css">
-    <link rel="stylesheet" href="http://127.0.0.1:8011/css/main.css">
-    <style>
-        .tree li {
-            list-style-type: none;
-            cursor:pointer;
-        }
-        .tree-closed {
-            height : 40px;
-        }
-        .tree-expanded {
-            height : auto;
-        }
-    </style>
+    <link rel="stylesheet" href="http://169.254.25.72:8011/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://169.254.25.72:8011/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://169.254.25.72:8011/css/main.css">
+
 </head>
 
 <body>
@@ -70,24 +59,9 @@
         </div>
     </div>
 </div>
-<script src="http://127.0.0.1:8011/jquery/jquery-2.1.1.min.js"></script>
-<script src="http://127.0.0.1:8011/bootstrap/js/bootstrap.min.js"></script>
-<script src="http://127.0.0.1:8011/script/docs.min.js"></script>
-<script src="http://127.0.0.1:8011/script/menu-left.js"></script>
-
-<script type="text/javascript">
-    $(function () {
-        $(".list-group-item").click(function(){
-            if ( $(this).find("ul") ) {
-                $(this).toggleClass("tree-closed");
-                if ( $(this).hasClass("tree-closed") ) {
-                    $("ul", this).hide("fast");
-                } else {
-                    $("ul", this).show("fast");
-                }
-            }
-        });
-    });
-</script>
+<script src="http://169.254.25.72:8011/jquery/jquery-2.1.1.min.js"></script>
+<script src="http://169.254.25.72:8011/bootstrap/js/bootstrap.min.js"></script>
+<script src="http://169.254.25.72:8011/script/docs.min.js"></script>
+<script src="http://169.254.25.72:8011/script/menu-left.js"></script>
 </body>
 </html>

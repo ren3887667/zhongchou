@@ -11,6 +11,18 @@
     <title>Title</title>
 </head>
 <body>
+<style>
+    .tree li {
+        list-style-type: none;
+        cursor:pointer;
+    }
+    .tree-closed {
+        height : 40px;
+    }
+    .tree-expanded {
+        height : auto;
+    }
+</style>
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
